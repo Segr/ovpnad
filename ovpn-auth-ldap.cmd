@@ -1,3 +1,5 @@
+REM auth-user-pass-verify C:/OpenVPN/config/pass-verify.cmd via-env
+
 set LOCALAPPDATA=C:\OpenVPN\config\users_data\%USERNAME%\AppData\Local
 set CommonProgramFiles=C:\Program Files\Common Files
 set CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
