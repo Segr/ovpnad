@@ -226,42 +226,6 @@ End Function
 Function IsValidUser()
 
 	On Error Resume Next 
-	Const E_ADS_PROPERTY_NOT_FOUND = &h8000500D
-
-	Dim arrMemberOf
-	Dim strPath, strUser, strPassword, strMember
-	Dim objDSO, objConnection, objCommand, objRecordSet, objRoot, objGroup
-	Dim retVal:retVal = False
-	
-	strPath = "LDAP://cn=" & strADUser & "," & strRootLDAP 
-	strUser = strADDomain & "\" & strADUser
-	strPassword = strADPass
-	
-	Set objDSO = GetObject("LDAP:")
-
-	Set objRoot = objDSO.OpenDSObject("LDAP://" & strADServer & "/" & _
-                                      "RootDSE", strADDomain & "\" & strADUser, _
-                                      strADPass, ADS_SERVER_BIND And _
-                                      ADS_USE_ENCRYPTION)
-
-	If Err Then
-		strLogText = "An authentication error has occurred!"
-		WriteLog(Err.Number)
-		WScript.Quit(1)
-	End If
-	
-	Set objGroup = GetObject("LDAP://" & strADGroupDN)
-	objGroup.GetInfo()
- 
-	arrMemberOf = objGroup.GetEx("member")
- 
-	For Each strMember in arrMemberOf
-		Set objMember = GetObject("LDAP://" & strMember)
-		If (StrComp(strADUser, objMember.SamAccountName, vbTextCompare) = 0) Then ' fix issue with case-sensitive username 
-			retVal = True
-			Exit For
-		End If
-	Next
 	
 	IsValidUser = retVal
 	    
